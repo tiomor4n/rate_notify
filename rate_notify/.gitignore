@@ -1,4 +1,0 @@
-*.pyc
-staticfiles
-db.sqlite3
-deploydjango/settings/local.py
