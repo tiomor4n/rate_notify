@@ -1,0 +1,1 @@
+web: gunicorn deploydjango.wsgi --log-file -
