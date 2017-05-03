@@ -25,7 +25,7 @@ SECRET_KEY = 'hhnpfo*jc@a!%lgm7-q#4h9noj9v1kwm(d*=l2eji1#878vmd@'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['stark-refuge-18608.herokuapp.com']
 
 
 # Application definition
