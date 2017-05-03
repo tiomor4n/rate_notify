@@ -1,1 +1,1 @@
-web: gunicorn deploydjango.wsgi --log-file -
+web: gunicorn rate_notify.wsgi --log-file -
