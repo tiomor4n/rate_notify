@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% block title %}訂閱Rate Notify{% endblock %}
+
+{% block nav %}
+<li><a href="/index/">回到首頁</a></li>
+{% endblock %}
+
+{% block script %}
+<script>
+ function runPyScript(TF,uid){
+                var jqXHR = $.ajax({
+                     type: "GET",
+                     url: "/stoptoday?id=" + uid  + "&TF=" + TF,
+                     async: false,
+                    
+                });
+
+               return jqXHR.responseText;
+ }
+ 
+ function getnotifyinfo(){
+      var username = '{{ request.user.username }}';
+      alert(username);
+      var jqXHR = $.ajax({
+        type:"GET",
+        url:"/getnotifyinfo?username=" + username,
+        async:false,
+      });
+      return jqXHR.responseText;
+ }
+</script>
+{% endblock %}
+
+{% block container %}
+<secton id="container">
+<div class="container">
+    <p><h2>{{request.user.first_name}} 您好,以下是你的訂閱通知內容:</h2></p>
+    
+    {% if ldata|length > 0%}
+    <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>幣別</th>
+        <th>B/S</th>
+        <th>目標匯率</th>
+        <th>本日通知</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for L in ldata %}
+      <tr>
+        <td>{{ L.ccy }}</td>
+        <td>{{ L.BS }}</td>
+        <td>{{ L.exrate }}</td>
+        <td><input type="checkbox" id="A{{ forloop.counter }}"
+            {% if L.stoptoday == 'X'  %}
+            checked
+            {% endif %}
+            data-toggle="toggle" data-on="開啟" data-off="關閉" data-width="75" data-height="35" data-onstyle="primary"/>
+        <script>
+        /*global $*/
+                  $('#A{{ forloop.counter }}').change(function() {
+                    //alert($(this).prop('checked'))  
+                    var TF = $(this).prop('checked')
+                    var uid = '{{ L.id }}'
+                    console.log(TF)
+                    result = runPyScript(TF,uid);
+                    console.log('Got back ' + result);
+                    
+                  })
+         
+        </script>
+        </td>
+        <td><a href="/subscribe/?id={{ L.id }}" class="button">修改</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <h1>你尚未輸入資料</h1>
+  {% endif%}
+  
+  {% if ldata|length < 5 %}
+     <a href="/subscribe/" class="button">新增資料</a>
+  {% endif %}
+  
+  {% if ldata|length = 5 %}
+  <h1>已達上限5筆</h1>
+  {% endif %}
+  
+  <br>
+  {% if ldata|length != 0 %}
+  <input class='button' onclick="getnotifyinfo();" value="確認您的訂閱資訊"></input>
+  {% endif %}
+
+  
+</div>
+</section>
+{% endblock %}

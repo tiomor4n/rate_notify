@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+    {% load static %}
+{% block title %}歡迎使用Line Notify{% endblock %}
+
+
+
+{% block script %}
+<script>
+    window.onload=function() {
+        var uemail = getParameterByName('email',window.location);
+        setTimeout(function(){
+            console.log('okok');
+            window.location.assign("/GetLineNotify/?email=" + uemail);
+        }, 0)
+        //console.log( "ready!" );
+    };
+</script>
+{% endblock %}
+
+{% block container %}
+    
+<secton id="container" style="background: url('{% static './images/register_1.jpg' %}">
+   <h1></h1>
+</section>
+{% endblock %}

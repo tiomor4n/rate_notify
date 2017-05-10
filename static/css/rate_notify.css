@@ -1,0 +1,85 @@
+.jumbotron { 
+                     background-color: #f4511e; /* Orange */
+                     color: #ffffff;
+		}
+		.logo {
+                     font-size: 200px;
+        }
+        @media screen and (max-width: 768px) {
+        .col-sm-4 {
+                     text-align: center;
+                     margin: 25px 0;
+        }
+        }
+        .container-fluid {
+                     padding: 60px 50px;
+        }
+        .slideanim {visibility:hidden;}
+        .slide {
+                 /* The name of the animation */
+                 animation-name: slide;
+                 -webkit-animation-name: slide; 
+                 /* The duration of the animation */
+                 animation-duration: 1s; 
+                 -webkit-animation-duration: 1s;
+                 /* Make the element visible */
+                 visibility: visible; 
+         }
+ 
+/* Go from 0% to 100% opacity (see-through) and specify the percentage from when to slide in the element along the Y-axis */
+@keyframes slide {
+    0% {
+        opacity: 0;
+        transform: translateY(70%);
+    } 
+    100% {
+        opacity: 1;
+        transform: translateY(0%);
+    } 
+}
+@-webkit-keyframes slide {
+    0% {
+        opacity: 0;
+        -webkit-transform: translateY(70%);
+    } 
+    100% {
+        opacity: 1;
+        -webkit-transform: translateY(0%);
+    }
+}
+    .navbar {
+    margin-bottom: 0;
+    background-color: #f4511e;
+    z-index: 9999;
+    border: 0;
+    font-size: 12px !important;
+    line-height: 1.42857143 !important;
+    letter-spacing: 4px;
+    border-radius: 0;
+}
+
+.navbar li a, .navbar .navbar-brand {
+    color: #fff !important;
+}
+
+.navbar-nav li a:hover, .navbar-nav li.active a {
+    color: #f4511e !important;
+    background-color: #fff !important;
+}
+
+.navbar-default .navbar-toggle {
+    border-color: transparent;
+    color: #fff !important;
+}
+
+.fade {
+  opacity: 0;
+  -webkit-transition: opacity 0.15s linear;
+  -moz-transition: opacity 0.15s linear;
+  -o-transition: opacity 0.15s linear;
+  transition: opacity 0.15s linear;
+}
+.fade.in {
+  opacity: 1;
+}
+

@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+  {% load static %}
+{% block title %}訂閱Rate Notify{% endblock %}
+
+{% block nav %}
+<li><a href="/index/">回到首頁</a></li>
+{% endblock %}
+
+{% block container %}
+  <section id='container'>
+  	<p>
+  	<div class="jumbotron text-center" >
+	    <h2>訂閱RateNotify<h2>
+	  </div>
+    <div class=container>	
+		    <div class="well well-lg">
+          <form action=""  method="post" class="form-group">{% csrf_token %}
+            <div class="input-group">
+              
+              <!--<input id="email" type="text" class="form-control" name="email" placeholder="Email">  input--> 
+            </div>
+            <div class="input-group">
+              
+              <!--<input id="email" type="text" class="form-control" name="email" placeholder="Email">  input--> 
+            </div>
+            <br/> 
+            {{ form.as_p }}
+            <button type="submit" class="button">Sign up</button>
+            <br>
+          </form>
+        </div>
+		</div>	
+  </section>
+{% endblock %}
+			
+		
+	
+  	
+
+
+

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+    {% load static %}
+{% block title %}歡迎使用Rate Notify{% endblock %}
+
+{% block container%}
+<script>
+    function LineAuth(){
+         var URL = 'https://access.line.me/dialog/oauth/weblogin?'
+         URL += 'response_type=code&client_id=1512516993'
+         URL += '&redirect_uri=https://rate-notify-tiomor4n.c9users.io/line_login&state=12345'
+         window.location.href = URL
+    }
+</script>
+<button id = 'linelogin' onclick="LineAuth();">LineLogin</button>
+{% endblock %}

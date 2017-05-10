@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+    {% load static %}
+{% block title %}歡迎使用Rate Notify{% endblock %}
+
+{% block container %}
+<script type='text/javascript'>
+/*global showemail*/
+/*global showcode*/
+    $("document").ready(function(){
+        showemail();
+        showcode();
+    });
+</script>
+<secton id="container">
+<div class="container">
+    <p1>恭喜您，您已訂閱完成RateNotify服務，您可以點選以下連結來重新登入</p1>
+    <a href=/login/ class='button'>重新登入</a>
+    <!--<form action='/subsummary/'><button type="submit" class="btn btn-default">開始使用</button></form>-->
+</div>
+</section>
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

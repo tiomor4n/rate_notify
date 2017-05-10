@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block title %}訂閱Rate Notify{% endblock %}
+
+{% block nav %}
+<li><a href="/index/">回到首頁</a></li>
+{% endblock %}
+
+{% block script %}
+
+<script type="text/javascript">
+	$("#myAlert").fadeTo(2000, 500).slideUp(500, function(){
+    $("#myAlert").slideUp(500);
+});
+	
+</script>
+{% endblock %}
+
+{% block container %}
+<secton id="container">
+<div class="container">
+	<input type="text" name="mytextbox" id='mytextbox' size="1" style="visibility:hidden"/>
+	
+	{% for e in errors%}
+	<p style="color:red;">{{ e }}</p>
+	{% endfor %}
+    <form action="" method="post" class="form-group">{% csrf_token %}
+
+
+			<label for="BS">請輸入買賣別B/S</label>
+			<!--<input type='text' name="BS" id="BS" size = "1" class="form-control" value="{{singleL.BS}}"/>-->
+		
+				{{ f.BS }}
+		
+			<br>
+		
+				{{ f.BS.errors }}
+		
+			
+			<label for="ccy">請輸入幣別:</label>
+			<!--<input type='text' name="ccy" id="ccy" size = "3" class="form-control" value="{{singleL.ccy}}"/>-->
+		
+				{{ f.ccy }}
+		
+			<br>
+		
+				{{ f.ccy.errors }}
+		
+			
+			<label for="exrate">請輸入匯率:
+			<!--<input type='text' name="exrate" id="exrate" size = "6" class="form-control" value ="{{singleL.exrate}}">-->
+		
+				{{ f.exrate }}
+	
+			<br>
+
+            
+            <div id="myAlert" class="alert alert-danger fade {% if showerr == 'V'  %}
+            in
+            {% else %}
+            hidden
+            {% endif %}">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {{ f.exrate.errors }}
+            </div>
+                
+            
+				
+		
+			
+			<input type='text' name="move" id="move" size = "1"  style="visibility:hidden" value ="{{vmove}}">
+			<input type='text' name="id" id="id" size = "20"  style="visibility:hidden" value ="{{singleL.id}}">
+			
+			
+				
+   		    <button name='gettoken' type="submit" class="button" >寫入資料</button>
+    </form>
+    
+</div>
+</section>
+{% endblock %}

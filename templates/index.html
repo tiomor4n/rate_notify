@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+    {% load static %}
+{% block title %}歡迎使用Rate Notify{% endblock %}
+
+
+
+    {% block banner %}
+    <section id="banner" style="background: url('{% static './images/banner.jpg' %}')">
+		  <div class="inner">
+			  <header>
+			  	<h1>訂閱你的匯率通知</h1>
+			  	<p>每天幫你確認最新的匯率情況</p><p>以最即時的方式通知你</p>
+		  	</header>
+			  <!--<a href=/index/ class="button big scrolly" src="{% static './images/btn_login_base.png' %}">Learn More</a>-->
+			  <a href=/line_login/><img  class="lineloginbtn" src="{% static './images/btn_login_base.png' %}"></img></a>
+		  </div>
+  	</section>
+  	{% endblock %} 
+
+{% block container %}
+
+<div id="main">
+  <!-- Section -->
+					<section class="wrapper style1">
+						<div class="inner">
+							<!-- 2 Columns -->
+								<div class="flex flex-2">
+									<div class="col col1">
+										<div class="image round fit">
+											<a href="generic.html" class="link"><img src="{% static './images/pic01.jpg' %}" alt="" /></a>
+										</div>
+									</div>
+									<div class="col col2">
+										<h3>透過Line通知您即時的匯率訊息</h3>
+										<p>內文一</p>
+										<p>內文2</p>
+										<a href="#" class="button">Learn More</a>
+									</div>
+								</div>
+						</div>
+					</section>
+		<!-- Section -->
+					<section class="wrapper style2">
+						<div class="inner">
+							<div class="flex flex-2">
+								<div class="col col2">
+									<h3>測試標題2</h3>
+									<p>內文一</p>
+									<p>內文2</p>
+									<a href="#" class="button">Learn More</a>
+								</div>
+								<div class="col col1 first">
+									<div class="image round fit">
+										<a href="#" class="link"><img src="{% static './images/pic02.jpg' %}" alt="" /></a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</section>
+</div>  
+
+
+    <!--
+	<div id="subscribe" class="container">
+	    <div class="row">
+	        <div class="col-sm-12 text-center">
+	           <h2>馬上訂閱</h2>
+	        </div>  
+	    </div>  
+	    <div class="col-sm-12 text-center">    
+	       <form class="form-inline">
+                <div class="input-group">
+				    <input type="email" id="emailsc" class="form-control" size="50" placeholder="Email Address" required>
+			        <div class="input-group-btn">
+                        <button type="button" class="btn btn-danger" onclick="oAuth2();">Subscribe</button>
+                   </div>
+                </div>
+                
+            </form>
+            <div div id="myAlert" class="alert alert-danger fade" data-alert="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                email輸入錯誤
+            </div>
+        </div>
+    </div>
+    -->
+
+
+<section class='container'>
+  <h2 class="text-center">回饋您的意見!</h2>
+		<form action="#" method='post'>
+			<div class= 'row uniform'>
+				<div class="4u 12u$(small)">
+                   <input id="name" name="name" placeholder="name" type="text" required>
+                </div>
+		        <div class="8u$ 12u$(small)">
+                   <input id="email" name="email" placeholder="email" type="text" required>
+                </div>
+		        <div class="12u$">
+                   <textarea class="form-control" id="comments" name="comments" placeholder="Comment" rows="5"></textarea><br>
+               </div>
+     
+       
+	     <div class="12u$">
+			     <input type='submit' value='learn more' class='fit'></button>
+	     </div>
+				
+					</div>
+					</form>
+						 
+</section>
+
+
+
+
+    
+{% endblock %}
+
+{% block footer %}
+<footer class="container-fluid text-center">
+   <p>design by Simon.M</p>
+   <p><span class="glyphicon glyphicon-envelope"></span> ratenotify@gmail.com</p>
+</footer>
+{% endblock %}

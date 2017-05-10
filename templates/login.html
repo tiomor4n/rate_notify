@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+    {% load static %}
+{% block title %}歡迎使用Rate Notify{% endblock %}
+
+{% block nav %}
+<li><a href="/index/">回到首頁</a></li>
+{% endblock %}
+
+{% block container %}
+    
+<secton id="container">
+    <div class="jumbotron text-center" >
+	    <h2>訂閱RateNotify<h2>
+	</div>
+	<div class="container">
+	<div class="well well-lg">
+	<form action="" method="post" class="form-group">{% csrf_token %}
+        <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+            <!--<input id="email" type="text" class="form-control" name="email" placeholder="Email" />-->
+            {{ f.username }}
+        </div>
+        <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+            <!--<input id="password" type="password" class="form-control" name="password" placeholder="Password">-->
+            {{ f.password }}
+        </div>
+        <br>
+   
+        {{ f.password.errors }}
+
+        <button type="submit" class="button">Sign in</button>
+    </form>
+    </div>
+    
+    <a href='#'>忘記密碼?</a>
+    <p>
+    <a href='/line_login/'>Line Login</a>
+    </div>
+    
+    
+</section>
+{% endblock %}
