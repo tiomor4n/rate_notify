@@ -73,7 +73,8 @@ def callback(request):
             if isinstance(event, MessageEvent):
                 if isinstance(event.message,TextMessage):
                     print event.reply_token
-                    if 
+					arr = ['USD','CNY']
+                    if event.message.text in arr:
                         jdata = ReadFromStaticBank()
                         retrate = jdata['BKTW'][event.message.text]['spotbuy']
                         line_bot_api.reply_message(
