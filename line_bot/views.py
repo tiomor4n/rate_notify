@@ -9,6 +9,7 @@ from linebot import LineBotApi, WebhookHandler,WebhookParser
 from linebot.exceptions import InvalidSignatureError, LineBotApiError
 from linebot.models import *
 from subscribe.crawer import ReadFromStaticBank
+import json
 
 line_bot_api = LineBotApi('4VnJ7GkaAtZy8QayMgnZPtTxn+CcgnT7hjdBf8RkBPh/EpttHhf91LIFpukyC2Iiq1m8VacnjZwtwGmIjUV35LK8CPFXU9s7TC5dgK6+DRxinoPbO8SLjrw+1nIgY/q56FULCUZkQIcGVWey212BYQdB04t89/1O/w1cDnyilFU=')
 parser = WebhookParser('c88afa86017208a7bc6af60be8585a33')
@@ -52,7 +53,7 @@ def callback(request):
         buttons_template = TemplateSendMessage(
             alt_text='Buttons template',
             template=ButtonsTemplate(
-                title='服務類型',
+                title='幣別',
                 text='請選擇',
                 thumbnail_image_url='https://i.imgur.com/sbOTJt4.png',
                 actions=[
@@ -75,7 +76,7 @@ def callback(request):
                     print event.reply_token
                     arr = ['USD','CNY']
                     if event.message.text in arr:
-                        jdata = ReadFromStaticBank()
+                        jdata = json.loads(ReadFromStaticBank())
                         retrate = jdata['BKTW'][event.message.text]['spotbuy']
                         line_bot_api.reply_message(
                             event.reply_token,
