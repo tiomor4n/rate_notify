@@ -38,7 +38,7 @@ def batchOP(vusername):
     
 	
     WriteToStatic()
-        
+    '''    
     if vusername == '%':
         AllLine = LineInformList.objects.all()
     else:
@@ -82,6 +82,7 @@ def batchOP(vusername):
         
     print str(resultArr)
     return json.dumps(resultArr, encoding="UTF-8", ensure_ascii=False)
+	'''
 	
 def RunBatchOP(request):
     from django.conf import settings as djangoSettings

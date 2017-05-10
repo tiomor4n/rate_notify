@@ -8,6 +8,7 @@ from django.shortcuts import render
 from linebot import LineBotApi, WebhookHandler,WebhookParser
 from linebot.exceptions import InvalidSignatureError, LineBotApiError
 from linebot.models import *
+from subscribe.crawer import ReadFromStaticBank
 
 line_bot_api = LineBotApi('4VnJ7GkaAtZy8QayMgnZPtTxn+CcgnT7hjdBf8RkBPh/EpttHhf91LIFpukyC2Iiq1m8VacnjZwtwGmIjUV35LK8CPFXU9s7TC5dgK6+DRxinoPbO8SLjrw+1nIgY/q56FULCUZkQIcGVWey212BYQdB04t89/1O/w1cDnyilFU=')
 parser = WebhookParser('c88afa86017208a7bc6af60be8585a33')
@@ -56,12 +57,12 @@ def callback(request):
                 thumbnail_image_url='https://i.imgur.com/sbOTJt4.png',
                 actions=[
                     MessageTemplateAction(
-                        label='近期上映電影',
-                        text='近期上映電影'
+                        label='USD',
+                        text='USD'
                     ),
                     MessageTemplateAction(
-                        label='eyny',
-                        text='eyny'
+                        label='CNY',
+                        text='CNY'
                     )
                 ]
             )
@@ -72,13 +73,18 @@ def callback(request):
             if isinstance(event, MessageEvent):
                 if isinstance(event.message,TextMessage):
                     print event.reply_token
-
-                    line_bot_api.reply_message(
-                        event.reply_token,
-                        #TextSendMessage(text=event.message.text),
-                        #post_text(event.reply_token,event.message.text)
-                        buttons_template
-                    )
+                    if 
+                        jdata = ReadFromStaticBank()
+                        retrate = jdata['BKTW'][event.message.text]['spotbuy']
+                        line_bot_api.reply_message(
+						    event.reply_token,
+							TextSendMessage(text=retrate),
+						)
+                    else:
+                        line_bot_api.reply_message(
+                            event.reply_token,
+                            buttons_template
+                        )
         
         return HttpResponse()
     else:
