@@ -1,6 +1,6 @@
 # -*- coding: utf8 -*-
 import requests
-from models import oper_para,EmailVerify
+from models import oper_para
 from django.contrib.auth.models import User
 from models import LineUserInfo
 

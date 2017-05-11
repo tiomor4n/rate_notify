@@ -1,15 +1,11 @@
 from django.contrib import admin
-from subscribe.models import EmailVerify,LineInformList
+from subscribe.models import LineInformList
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 
 # Register your models here.
 
-admin.site.register(EmailVerify)
 admin.site.register(LineInformList)
-
-
-
 
 from .models import LineUserInfo
 

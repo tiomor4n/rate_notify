@@ -5,11 +5,6 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.contrib.auth.models import User
 
-class EmailVerify(models.Model):
-    email = models.CharField(max_length=20)
-    verify= models.BooleanField(default=False)
-    token = models.CharField(max_length=45,default='')
-    msgcnt = models.IntegerField(default=0)
 
 class LineInformList(models.Model):
     username = models.CharField(max_length=35,default = '')

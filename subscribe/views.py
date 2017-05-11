@@ -8,7 +8,7 @@ from django.shortcuts import render_to_response,redirect
 from django.http import HttpResponseRedirect
 from django.contrib import auth 
 from django.contrib.auth.models import User
-from subscribe.models import LineInformList,EmailVerify,oper_para
+from subscribe.models import LineInformList,oper_para
 from crawer import ReadFromStaticBank,WriteToStatic,BKTWDataPipe
 from subscribe.LineNotify import sendmsg,GetToken,GetLoginToken
 from subscribe.utility import getTimeStamp,GetShortUrl,encryptdan,decryptdan
