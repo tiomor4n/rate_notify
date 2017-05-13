@@ -190,7 +190,8 @@ def subscribe(request):
                         stoptoday = 'X'
                         )
                     Line1.save()
-                    return HttpResponseRedirect('/subsummary/')
+                    #return HttpResponseRedirect('/subsummary/')
+                    return render_to_response('subsummary.html',RequestContext(request,locals()))
                 else:
                 #修改資料
                     vid = request.POST['id']
@@ -199,14 +200,15 @@ def subscribe(request):
                     Line1.ccy = vccy
                     Line1.exrate = vexrate
                     Line1.save()
-                    return HttpResponseRedirect('/subsummary/')
+                    #return HttpResponseRedirect('/subsummary/')
+                    return render_to_response('subsummary.html',RequestContext(request,locals()))
             else:
                 showerr = 'V'
                 print f['BS'].errors
                 print f['ccy'].errors
                 print f['exrate'].errors
                 singleL = LineInformList.objects.get(id = request.POST['id'])
-                return render_to_response('subscribe.html',locals())
+                return render_to_response('subscribe.html',RequestContext(request,locals()))
                     
                 
         #修改資料
