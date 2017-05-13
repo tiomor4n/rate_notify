@@ -12,7 +12,7 @@ from subscribe.models import LineInformList,oper_para
 from crawer import ReadFromStaticBank,WriteToStatic,BKTWDataPipe
 from subscribe.LineNotify import sendmsg,GetToken,GetLoginToken
 from subscribe.utility import getTimeStamp,GetShortUrl,encryptdan,decryptdan
-#from subscribe.forms import subscribeForm,YourSignupForm,loginForm
+from subscribe.forms import subscribeForm
 import json
 
 
