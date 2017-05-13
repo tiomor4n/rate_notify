@@ -365,6 +365,6 @@ def line_login(request):
     else:
         URL = 'https://access.line.me/dialog/oauth/weblogin?'
         URL += 'response_type=code&client_id=1512516993'
-        URL += '&redirect_uri=https://rate-notify-tiomor4n.c9users.io/line_login&state=12345'
+        URL += '&redirect_uri=https://stark-refuge-18608.herokuapp.com/line_login&state=12345'
         return redirect(URL)
         #return render_to_response('Line_Login.html') 
