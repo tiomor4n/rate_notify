@@ -46,7 +46,7 @@ def GetLoginToken(code):
     import json
     channel_id = '1512516993'
     client_secret = '2518639a9a3e23e6955276cdef21c99d'
-    redirect_uri = 'https://rate-notify-tiomor4n.c9users.io/line_login'
+    redirect_uri = 'https://stark-refuge-18608.herokuapp.com/line_login'
     
     #https://api.line.me/v2/oauth/accesstoken
     r = requests.post("https://api.line.me/v2/oauth/accessToken",
