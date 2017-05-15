@@ -209,7 +209,7 @@ def subscribe(request):
                 print f['BS'].errors
                 print f['ccy'].errors
                 print f['exrate'].errors
-                singleL = LineInformList.objects.get(id = request.POST['id'])
+                #singleL = LineInformList.objects.get(id = request.POST['id'])
                 #return render_to_response('subscribe.html',RequestContext(request,locals()))
                 return render_to_response('subscribe.html',locals())
                     
