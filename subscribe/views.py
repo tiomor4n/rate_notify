@@ -14,6 +14,7 @@ from subscribe.LineNotify import sendmsg,GetToken,GetLoginToken
 from subscribe.utility import getTimeStamp,GetShortUrl,encryptdan,decryptdan
 from subscribe.forms import subscribeForm
 import json
+from django.views.decorators.csrf import csrf_exempt  
 
 
 def findCCY(vccy):
@@ -156,6 +157,7 @@ def subsummary(request):
         
     return render_to_response('subsummary.html',locals())
 
+@csrf_exempt
 def subscribe(request):
     from itsdangerous import URLSafeSerializer
     
@@ -242,7 +244,6 @@ def subscribe(request):
 
 def logout(request):
     auth.logout(request)
-    f = loginForm()
     return render_to_response('index.html',locals()) 
 
 def stoptoday(request):
