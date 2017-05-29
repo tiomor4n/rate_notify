@@ -67,3 +67,71 @@ def BKTWDataPipe():
     #print json.dumps(totalObj,encoding="UTF-8", ensure_ascii=False)
    
     return json.dumps(totalObj,encoding="UTF-8", ensure_ascii=False)
+	
+def WriteToStaticBOT(msgstr='',way=''):
+    from datetime import datetime
+    import calendar
+    from django.conf import settings as djangoSettings
+    
+    msgjson = json.loads(msgstr)
+    
+    
+    mid = mid = msgjson['events'][0]['source']['userId']
+    mtext = msgjson['events'][0]['message']['text']
+   
+        
+    
+    filename = 'linemsg_' + mid
+    tstamp = calendar.timegm(datetime.now().timetuple())
+    #確認檔案是否存在
+    if os.path.isfile(djangoSettings.STATIC_ROOT + '\\bot\\' + filename):
+        #有檔案
+        with open(djangoSettings.STATIC_ROOT + '\\bot\linemsg_'+ mid) as msgkeep:
+            jdata = json.load(msgkeep)
+            print jdata
+            stepcnt = jdata['nowstep']
+            
+        jdata['timestamp'] = tstamp
+        talk = jdata['step' + str(stepcnt)]
+        if way == 'ask':
+            stepcnt = stepcnt + 1
+            jdata['step' + str(stepcnt)] = {}
+            jdata['step' + str(stepcnt)]['ask'] = mtext
+        else:    #reply
+            print 'reply'
+            talk['reply'] = mtext
+                
+        jdata['nowstep'] = stepcnt
+                
+        with open(djangoSettings.STATIC_ROOT + '\\bot\linemsg_'+ mid, 'w+') as msgwrite:
+            msgwrite.write(json.dumps(jdata))
+            msgwrite.close()
+            
+    else:
+        #沒檔案
+        print 'no file'
+        step = 0
+        msgkeep = {}
+        msgkeep['timestamp'] = tstamp
+        msgkeep['nowstep'] = step
+        msgkeep['step' + str(step)] = {}
+        msgkeep['step' + str(step)]['ask'] = mtext
+        print msgkeep
+        
+        file = open(djangoSettings.STATIC_ROOT + '\\bot\linemsg_'+mid , 'w+')
+        file.write(json.dumps(msgkeep))
+        file.close()
+
+def checkstep(mid=''):
+    from django.conf import settings as djangoSettings
+    purporse = ''
+    step = 0
+    filename = djangoSettings.STATIC_ROOT + '\\bot\linemsg_'+ mid
+    #先確認檔案是否存在
+    if os.path.exists(filename):
+        with open(filename) as json_data:
+            data= json.loads(json_data)
+            step = data['nowstep']
+            purporse = data['step0']['ask']
+    
+    return purporse,step

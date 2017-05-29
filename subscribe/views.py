@@ -317,6 +317,7 @@ def hist_data(request):
     return render_to_response('hist_data.html')
     
 def line_login(request):
+    from subscribe.models import oper_para
     
     def deal_login_data(mid='',mName='',mpictureUrl=''):
         import random
@@ -367,8 +368,10 @@ def line_login(request):
             return HttpResponseRedirect('/subsummary/')
         
     else:
+        login_client_id = oper_para.objects.get(name='login_client_id')
+        login_redirect_uri = oper_para.objects.get(name='login_redirect_uri')
         URL = 'https://access.line.me/dialog/oauth/weblogin?'
-        URL += 'response_type=code&client_id=1512516993'
-        URL += '&redirect_uri=https://stark-refuge-18608.herokuapp.com/line_login&state=12345'
+        URL += 'response_type=code&client_id=' + login_client_id
+        URL += '&redirect_uri=' + login_redirect_uri + '&state=12345'
         return redirect(URL)
         #return render_to_response('Line_Login.html') 
