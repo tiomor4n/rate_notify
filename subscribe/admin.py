@@ -1,11 +1,12 @@
 from django.contrib import admin
-from subscribe.models import LineInformList
+from subscribe.models import LineInformList,oper_para
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 
 # Register your models here.
 
 admin.site.register(LineInformList)
+admin.site.register(oper_para)
 
 from .models import LineUserInfo
 

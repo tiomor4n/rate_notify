@@ -44,24 +44,26 @@ def GetLoginToken(code):
     
     
     import json
-    channel_id = '1512516993'
-    client_secret = '2518639a9a3e23e6955276cdef21c99d'
-    redirect_uri = 'https://stark-refuge-18608.herokuapp.com/line_login'
+    
+	
+    channel_id = oper_para.objects.get(name = 'login_client_id')
+    client_secret = oper_para.objects.get(name = 'login_client_secret')
+    redirect_uri = oper_para.objects.get(name = 'login_redirect_uri')
     
     #https://api.line.me/v2/oauth/accesstoken
     r = requests.post("https://api.line.me/v2/oauth/accessToken",
                       data={
                           "grant_type":"authorization_code",
-                          "client_id":channel_id,
-                          "client_secret":client_secret,
+                          "client_id":channel_id.content,
+                          "client_secret":client_secret.content,
                           "code":code,
-                          "redirect_uri":redirect_uri
+                          "redirect_uri":redirect_uri.content
                       },
                       headers={
                           "Content-Type":"application/x-www-form-urlencoded"
                       }
                    )
-    #print r.text
+    print r.text
     jsont = json.loads(r.text)
     r=GetLineProfile(jsont['access_token'])
     jsonr = json.loads(r)

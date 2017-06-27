@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+<head>
+	<meta http-equiv="Pragma" content="no-cache">
+</head>
+
+{% block title %}訂閱Rate Notify{% endblock %}
+
+{% block nav %}
+<li>
+    <img src='{{ UU.lineuserinfo.profilesrc}}' class = 'circular--portrait'></img>
+    {{UU.first_name}} 
+</li>
+<li><a href="/index/">回到首頁</a></li>
+
+{% endblock %}
+
+{% block script %}
+
+<script type="text/javascript">
+	$("#myAlert").fadeTo(2000, 500).slideUp(500, function(){
+    $("#myAlert").slideUp(500);
+});
+    $("#myAlert1").fadeTo(2000, 500).slideUp(500, function(){
+    $("#myAlert1").slideUp(500);
+});
+    $("#myAlert2").fadeTo(2000, 500).slideUp(500, function(){
+    $("#myAlert2").slideUp(500);
+});
+    
+</script>
+<script  type="text/javascript">
+    //window.history.forward(1);
+    function alertt(){
+    	
+    }
+    
+    function showurlmsg(){
+            document.getElementById("mid").value =  getParameterByName('mid',window.location);
+            document.getElementById("id").value =  getParameterByName('id',window.location);
+            document.getElementById("move").value =  getParameterByName('move',window.location);
+            
+        }
+</script>
+{% endblock %}
+
+{% block container %}
+<secton id="container">
+<div class="container">
+	<input type="text" name="mytextbox" id='mytextbox' size="1" style="visibility:hidden"/>
+	
+	{% for e in errors%}
+	<p style="color:red;">{{ e }}</p>
+	{% endfor %}
+    <form  method="post" action="." class="form-group">
+
+
+			<label for="BS">請輸入買賣別B/S</label>
+				{{ f.BS }}
+			<br>
+		    <div id="myAlert1" class="alert alert-danger fade {% if showerr == 'V'  %}
+            in
+            {% else %}
+            hidden
+            {% endif %}">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {{ f.BS.errors }}
+            </div>
+				
+		
+			
+			<label for="ccy">請輸入幣別:</label>
+				{{ f.ccy }}
+			<br>
+			<div id="myAlert2" class="alert alert-danger fade {% if showerr == 'V'  %}
+            in
+            {% else %}
+            hidden
+            {% endif %}">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {{ f.ccy.errors }}
+            </div>	
+			
+			
+			
+			<label for="exrate">請輸入匯率:
+				{{ f.exrate }}
+			<br>
+
+            
+            <div id="myAlert" class="alert alert-danger fade {% if showerr == 'V'  %}
+            in
+            {% else %}
+            hidden
+            {% endif %}">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {{ f.exrate.errors }}
+            </div>
+                
+            
+				
+		
+			
+			<input type='text' name="move" id="move" size = "1"  style="visibility:hidden" value ="">
+			<input type='text' name="id" id="id" size = "40"  style="visibility:hidden" value ="">
+			<input type='text' name="mid" id="mid" size = "40"  style="visibility:hidden" value ="">
+			
+			
+				
+   		    <button name='gettoken' type="submit" class="button" onclick="showurlmsg();">寫入資料</button>
+   		    
+   		    
+    </form>
+    
+</div>
+</section>
+{% endblock %}

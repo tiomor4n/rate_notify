@@ -9,7 +9,7 @@ from django.http import HttpResponseRedirect
 from django.contrib import auth 
 from django.contrib.auth.models import User
 from subscribe.models import LineInformList,oper_para
-from crawer import ReadFromStaticBank,WriteToStatic,BKTWDataPipe
+from crawer import ReadFromStaticBank,WriteToStatic,BKTWDataPipe,CheckDialog,RemoveDialog
 from subscribe.LineNotify import sendmsg,GetToken,GetLoginToken
 from subscribe.utility import getTimeStamp,GetShortUrl,encryptdan,decryptdan
 from subscribe.forms import subscribeForm
@@ -104,11 +104,12 @@ def batchOP(vusername):
 
 
 def RunBatchOP(request):
-    from django.conf import settings as djangoSettings
-    print djangoSettings.STATIC_URL
-    print djangoSettings.STATICFILES_DIRS
-    batchOP('%')
-    return HttpResponse('ok')
+    import sys
+    try:
+        batchOP('%')
+        return HttpResponse('ok')
+    except:
+        return HttpResponse("Unexpected error:", sys.exc_info()[0])
     
 def checkOP(vusername):
     import sys
@@ -371,7 +372,109 @@ def line_login(request):
         login_client_id = oper_para.objects.get(name='login_client_id')
         login_redirect_uri = oper_para.objects.get(name='login_redirect_uri')
         URL = 'https://access.line.me/dialog/oauth/weblogin?'
-        URL += 'response_type=code&client_id=' + login_client_id
-        URL += '&redirect_uri=' + login_redirect_uri + '&state=12345'
+        URL += 'response_type=code&client_id=' + str(login_client_id.content)
+        URL += '&redirect_uri=' + str(login_redirect_uri.content) + '&state=12345'
         return redirect(URL)
         #return render_to_response('Line_Login.html') 
+
+@csrf_exempt
+def subscribe_bot(request):
+    if request.method == 'POST':
+        print 'POST incoming'
+        mid = request.POST['mid']
+        #UU = User.objects.get(username = mid)
+        print 'mid:' + mid
+        if CheckDialog(mid):
+            vBS = request.POST['BS']
+            vccy = request.POST['ccy']
+            vexrate = request.POST['exrate']
+            vid = request.POST['id']
+            move = request.POST['move']
+            errors=[]
+            f = subscribeForm({'BS':vBS,'ccy':vccy,'exrate':vexrate})
+            if f.is_valid():
+                #分inert/udpate
+                if move == 'update':
+                    vid = request.POST['id']
+                    Line1 = LineInformList.objects.get(id = vid)
+                    Line1.BS = vBS
+                    Line1.ccy = vccy
+                    Line1.exrate = vexrate
+                    Line1.save()
+                    return HttpResponseRedirect('/writeDB_bot/?mid=' + mid)
+                elif move == 'insert' :
+                    Line1 = LineInformList(username = request.POST['mid'],
+                        bank = 'BKTW',
+                        BS = vBS,
+                        ccy = vccy,
+                        exrate = vexrate,
+                        stoptoday = 'X'
+                        )
+                    Line1.save()
+                    return HttpResponseRedirect('/writeDB_bot/?mid=' + mid)
+            else:
+                showerr = 'V'
+                print 'errr'
+                return render_to_response('subscribe_bot.html',locals())
+        else:
+            print 'POST Err'
+            return HttpResponseBadRequest()
+    
+    elif 'move' in request.GET and 'mid' in request.GET and request.GET['mid'] != '':
+        if request.GET['move'] == 'update':
+            if 'id' in request.GET and request.GET['id'] != '':
+                
+                lid = request.GET['id']
+                lmid = request.GET['mid']
+                llist = LineInformList.objects.filter(id = lid,username = lmid)
+                if len(llist) == 0:
+                    return HttpResponseBadRequest()
+                else:
+                    vBS = llist[0].BS
+                    vccy = llist[0].ccy
+                    vexrate = llist[0].exrate
+                    f = subscribeForm({'BS':vBS,'ccy':vccy,'exrate':vexrate})
+                    return render_to_response('subscribe_bot.html',locals()) 
+            else:
+                return HttpResponseBadRequest()
+        elif request.GET['move'] == 'insert':
+            f = subscribeForm(initial={'BS':'I','ccy':'INT','exrate':''})
+            return render_to_response('subscribe_bot.html',locals()) 
+        else:
+            return HttpResponseBadRequest()
+    else:
+        return HttpResponseBadRequest()
+
+
+        
+def writeDB_bot(request):
+    if request.method == 'GET':
+        mid = request.GET['mid']
+        if CheckDialog(mid):
+            '''
+            vBS = request.POST['BS']
+            vccy = request.POST['ccy']
+            vexrate = request.POST['exrate']
+            vid = request.POST['id']
+            if vid != '':
+                #udpate
+                pass
+            else:
+                #insert
+                pass
+                
+            os.remove('./' + djangoSettings.STATIC_URL+ 'bot/' + 'linemsg_' + mid)    
+            '''
+            RemoveDialog(mid)
+            return HttpResponseRedirect('/writeDB_bot2/')     
+        else:
+            return HttpResponse('此連結已過期')
+        
+        
+        
+            
+    else:
+        HttpResponseBadRequest()
+
+def writeDB_bot2(request):
+    return render_to_response('writeDB_bot.html',locals()) 

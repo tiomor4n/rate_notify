@@ -32,7 +32,6 @@ class subscribeForm(forms.Form):
     BSlist = (('B',u'買'),('S',u'賣'),('I','-'))
     ccylist = (
         ('INT',u'請輸入'),
-        ('DEL',u'刪除'),
         ('HKD',u'港幣'),
         ('USD',u'美金'),
         ('CNY',u'人民幣'),
@@ -44,13 +43,31 @@ class subscribeForm(forms.Form):
         ('KRW',u'韓圜'))
     BS = forms.ChoiceField(choices=BSlist,label=u'買/賣別',widget=forms.Select(attrs={'class':'form-control'}))
     ccy = forms.ChoiceField(choices=ccylist,label=u'幣別',widget=forms.Select(attrs={'class':'form-control'}))
-    exrate = forms.CharField(max_length=8,required=True,label = u'目標匯率',widget=forms.TextInput(attrs={'class':'form-control',
+    exrate = forms.CharField(max_length=8,label = u'目標匯率',widget=forms.TextInput(attrs={'class':'form-control',
          'placeholder':u'請輸入'
     }))
+    
+    
+    def clean_BS(self):
+        BS = self.cleaned_data['BS']
+        if BS not in ['B','S']:
+            raise forms.ValidationError(u'請選擇買賣別')
+        return self.cleaned_data['BS']
+        
+    def clean_ccy(self):
+        BS = self.cleaned_data['ccy']
+        if BS not in ['HKD','USD','CNY','EUR','AUD','GBP','SGD','JPY','KRW']:
+            raise forms.ValidationError(u'請選擇幣別')
+        return self.cleaned_data['ccy']
+            
+        
     
     def clean_exrate(self):
         exrate = self.cleaned_data['exrate']
         print type(exrate)
+        if exrate == '':
+            raise forms.ValidationError(u'請輸入數字')
+        
         try:
             intexrate = float(exrate)
         except ValueError:
