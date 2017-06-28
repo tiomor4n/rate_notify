@@ -77,7 +77,7 @@ def BKTWDataPipe():
 
 def ReadFromStaticBOT(mid):
     import json
-    filename = '\\bot\linemsg_' + mid
+    filename = prefilename + mid
     filepath = fileroute + filename
     with open(filepath) as json_data:
         d = json.load(json_data)
@@ -91,7 +91,7 @@ def WriteToStaticBOT(msgstr='',way=''):
     mid = mid = msgjson['events'][0]['source']['userId']
     mtext = msgjson['events'][0]['message']['text']
    
-    filename = '\\bot\linemsg_' + mid
+    filename = prefilename + mid
     filepath = fileroute + filename
     tstamp = calendar.timegm(datetime.now().timetuple())
     #確認檔案是否存在
