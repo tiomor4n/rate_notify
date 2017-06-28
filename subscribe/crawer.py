@@ -96,7 +96,7 @@ def WriteToStaticBOT(msgstr='',way=''):
     tstamp = calendar.timegm(datetime.now().timetuple())
     #確認檔案是否存在
     if os.path.isfile(filepath):
-        print u'有檔案'
+        print u'have file'
         with open(filepath) as msgkeep:
             jdata = json.load(msgkeep)
             stepcnt = jdata['nowstep']
@@ -120,7 +120,7 @@ def WriteToStaticBOT(msgstr='',way=''):
             msgwrite.close()
             
     else:
-        print u'沒檔案'
+        print u'no file'
         step = 0
         msgkeep = {}
         msgkeep['timestamp'] = tstamp
