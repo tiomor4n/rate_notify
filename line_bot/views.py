@@ -606,7 +606,7 @@ def callback(request):
                     elif event.message.text in twayarr:
                         WriteToStaticBOT(body,"ask")
                         purporse,step,last_ask,timestamp = CheckStep(mid)
-                        print 'purporse and step:' + purporse + ' ' + str(step)
+                        print 'purporse and step:' + purporse.encode('utf-8') + ' ' + str(step)
                         if purporse == '/ratequote' or purporse == u'匯率報價':
                             line_bot_api.reply_message(
                                 event.reply_token,
@@ -695,9 +695,9 @@ def callback(request):
                     elif event.message.text == u'是':
                         WriteToStaticBOT(body,"ask")
                         purporse,step,last_ask,timestamp = CheckStep(mid)
-                        print 'purporse:' + purporse
+                        print 'purporse:' + purporse.encode('utf-8')
                         if purporse == u'刪除':
-                            print 'last ask:' + last_ask
+                            print 'last ask:' + last_ask.encode('utf-8')
                             pd = LineInformList.objects.filter(id = last_ask).delete()
                         line_bot_api.reply_message(
                                 event.reply_token,
@@ -709,7 +709,7 @@ def callback(request):
                     elif isfloat(event.message.text):
                         WriteToStaticBOT(body,"ask")
                         purporse,step,last_ask,timestamp = CheckStep(mid)
-                        print 'purporse and step:' + purporse + ' ' + str(step)
+                        print 'purporse and step:' + purporse.encode('utf-8') + ' ' + str(step)
                         if purporse == '/ratecal1' or purporse == u'台幣換外幣':
                             line_bot_api.reply_message(
                                 event.reply_token,
@@ -767,12 +767,3 @@ def callback(request):
         return HttpResponse()
     else:
         return HttpResponseBadRequest()
-        
-'''
-http://huli.logdown.com/posts/726082-line-bot-api-tutorial
-https://github.com/line
-http://www.oxxostudio.tw/articles/201701/line-bot.html
-http://lee-w-blog.logdown.com/posts/1134898-line-echo-bot-on-django
-https://github.com/Lee-W/line_echobot/blob/master/echobot/views.py
-http://blog.masterstudio101.com/2013/05/12/cURL%20%E6%8C%87%E4%BB%A4%E6%95%99%E5%AD%B8%20(cURL%20command%20how-to)
-'''
