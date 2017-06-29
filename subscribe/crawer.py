@@ -90,8 +90,8 @@ def ReadFromStaticBOT(mid):
 def WriteToStaticBOT(msgstr='',way=''):
     from datetime import datetime
     import calendar
-    import sys
-    sys.setdefaultencoding='utf8'
+    #import sys
+    #sys.setdefaultencoding='utf8'
     msgjson = json.loads(msgstr)
 
     mid = mid = msgjson['events'][0]['source']['userId']
@@ -126,7 +126,7 @@ def WriteToStaticBOT(msgstr='',way=''):
             msgwrite.close()
             
     else:
-        print u'no file'
+        print u'沒檔案'.encode('utf-8')
         step = 0
         msgkeep = {}
         msgkeep['timestamp'] = tstamp
