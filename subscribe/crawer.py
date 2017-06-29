@@ -13,7 +13,7 @@ prefilename = 'bot/linemsg_'
 
 def ReadFromStaticBank():
     #with open('.' + djangoSettings.STATIC_ROOT+ '\\exrate_' + 'BK'+'.json') as json_data:
-    with open(djangoSettings.STATIC_ROOT + "\exrate_BK.json") as json_data:
+    with open(fileroute + "\exrate_BK.json") as json_data:
         d = json.load(json_data)
     return json.dumps(d,encoding="UTF-8", ensure_ascii=False)
     
@@ -25,7 +25,7 @@ def WriteToStatic():
     ccyArr = ['HKD','USD','CNY','EUR','AUD','GBP','SGD','JPY','KRW']
         
     jsonBKTW = json.dumps(json.loads(BKTWDataPipe()))
-    file = open(djangoSettings.STATIC_ROOT+ '\exrate_BK.json','w+')
+    file = open(fileroute+ '\exrate_BK.json','w+')
     file.write(jsonBKTW)
     file.close()
     
