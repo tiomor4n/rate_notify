@@ -488,6 +488,8 @@ def RatecalProg(step=0):
 
 @csrf_exempt
 def callback(request):
+    import sys
+    sys.setdefaultencoding='utf8'
     def LineMsgOut(mid,message):
         sendmsgstr = '{"events":[{"source":{"userId":"' + mid + '"},"message":{"text":"'+ message + '"}}]}'
         #print sendmsgstr
