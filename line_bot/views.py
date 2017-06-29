@@ -557,14 +557,14 @@ def callback(request):
                     if event.message.text in ccyarr:
                         WriteToStaticBOT(body,"ask")
                         purporse,step,last_ask,timestamp = CheckStep(mid)
-                        print 'purporse and step:' + purporse + ' ' + str(step)
+                        print 'purporse and step:' + purporse.encode('utf-8') + ' ' + str(step)
                         if purporse == '/ratequote' or purporse == u'匯率報價':
                             if CheckDialog(mid):
                                 #RemoveDialog(mid)
                                 pass
                             
                             jdata = json.loads(ReadFromStaticBank())
-                            print 'last ask:' + last_ask
+                            print 'last ask:' + last_ask.encode('utf-8')
                             if last_ask == u'買':
                                 retrate = jdata['BKTW'][GetCcyStrChn(event.message.text)]['spotsell']
                             elif last_ask == u'賣':
@@ -578,7 +578,7 @@ def callback(request):
                             LineMsgOut(mid = mid,message = retrate)
                         elif purporse == '/ratecal1' or purporse == u'台幣換外幣':
                             jdata = json.loads(ReadFromStaticBank())
-                            print 'last ask:' + last_ask
+                            print 'last ask:' + last_ask.encode('utf-8')
                             retrate = (float(jdata['BKTW'][GetCcyStrChn(event.message.text)]['spotsell'])  + float(jdata['BKTW'][GetCcyStrChn(event.message.text)]['spotbuy'])) / 2
                             ret = u'新台幣' + last_ask + u'折合'  + event.message.text  + u'為' + str(round(float(last_ask) / retrate,2)) + u'元'
                             line_bot_api.reply_message(
