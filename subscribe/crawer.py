@@ -2,6 +2,7 @@
 import os
 import json
 from django.conf import settings as djangoSettings
+from utility import GetCcyStr
 
 #fileroute = djangoSettings.STATIC_ROOT
 #prefilename = '\\bot\linemsg_'
@@ -77,6 +78,9 @@ def BKTWDataPipe():
 
 def ReadFromStaticBOT(mid):
     import json
+    import sys
+    sys.setdefaultencoding='utf8'
+
     filename = prefilename + mid
     filepath = fileroute + filename
     with open(filepath) as json_data:
@@ -86,6 +90,8 @@ def ReadFromStaticBOT(mid):
 def WriteToStaticBOT(msgstr='',way=''):
     from datetime import datetime
     import calendar
+    import sys
+    sys.setdefaultencoding='utf8'
     msgjson = json.loads(msgstr)
 
     mid = mid = msgjson['events'][0]['source']['userId']
@@ -96,7 +102,7 @@ def WriteToStaticBOT(msgstr='',way=''):
     tstamp = calendar.timegm(datetime.now().timetuple())
     #確認檔案是否存在
     if os.path.isfile(filepath):
-        print u'have file'
+        print u'有檔案'.encode('utf-8')
         with open(filepath) as msgkeep:
             jdata = json.load(msgkeep)
             stepcnt = jdata['nowstep']
@@ -108,10 +114,10 @@ def WriteToStaticBOT(msgstr='',way=''):
             stepcnt = stepcnt + 1
             jdata['step' + str(stepcnt)] = {}
             jdata['step' + str(stepcnt)]['ask'] = mtext
-            print 'ask:' + mtext
+            print 'ask:' + mtext.encode('utf-8')
         else:    #reply
             talk['reply'] = mtext
-            print 'reply:' + mtext
+            print 'reply:' + mtext.encode('utf-8')
                 
         jdata['nowstep'] = stepcnt
                 
@@ -127,7 +133,7 @@ def WriteToStaticBOT(msgstr='',way=''):
         msgkeep['nowstep'] = step
         msgkeep['step' + str(step)] = {}
         msgkeep['step' + str(step)]['ask'] = mtext
-        print 'ask:' + mtext
+        print 'ask:' + mtext.encode('utf-8')
         
         file = open(filepath , 'w+')
         file.write(json.dumps(msgkeep))
