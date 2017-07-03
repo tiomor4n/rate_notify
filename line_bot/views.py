@@ -394,7 +394,7 @@ def GenSubscribeTemplate(mid='',purporse = ''):
                     subdataarr1.append(
                             PostbackTemplateAction(
                                      label=modifystrarr[r1],
-                                     text=modifystrarr[r1],
+                                     text=u'已選擇刪除資料',
                                      data=deletearr[r1]
                                 )
                         )     
@@ -413,7 +413,7 @@ def GenSubscribeTemplate(mid='',purporse = ''):
                     subdataarr2.append(
                              PostbackTemplateAction(
                                      label=modifystrarr[r2],
-                                     text=modifystrarr[r2],
+                                     text=u'已選擇刪除資料',
                                      data=deletearr[r2]
                                 )
                             )

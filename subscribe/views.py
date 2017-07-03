@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 from django.http import HttpResponse
 from django.shortcuts import render
-from django.http import HttpRequest
+from django.http import HttpRequest,HttpResponseBadRequest
 from django.template import RequestContext
 from django.shortcuts import render_to_response,redirect
 from django.http import HttpResponseRedirect
@@ -393,6 +393,8 @@ def subscribe_bot(request):
             errors=[]
             f = subscribeForm({'BS':vBS,'ccy':vccy,'exrate':vexrate})
             if f.is_valid():
+                print 'f is valid'
+                print 'move:' + move
                 #分inert/udpate
                 if move == 'update':
                     vid = request.POST['id']
@@ -413,20 +415,35 @@ def subscribe_bot(request):
                     Line1.save()
                     return HttpResponseRedirect('/writeDB_bot/?mid=' + mid)
             else:
-                showerr = 'V'
+                #showerr = 'V'
+                if f['BS'].errors != []:
+                    print 'BS Err' 
+                    showerrBS = 'V'
+                if f['exrate'].errors != []:
+                    print 'exrate Err'
+                    showerrexrate = 'V'
+                if f['ccy'].errors != []:
+                    print 'ccy Err' 
+                    showerrccy = 'V'
                 print 'errr'
+                mid = request.POST['mid']
+                vid = request.POST['id']
+                move = request.POST['move']
                 return render_to_response('subscribe_bot.html',locals())
+                #context = {'mid': mid}
+                #return render(request, 'subscribe_bot.html', context)
+                
         else:
             print 'POST Err'
             return HttpResponseBadRequest()
     
     elif 'move' in request.GET and 'mid' in request.GET and request.GET['mid'] != '':
+        move = request.GET['move']
+        mid = request.GET['mid']
         if request.GET['move'] == 'update':
             if 'id' in request.GET and request.GET['id'] != '':
-                
-                lid = request.GET['id']
-                lmid = request.GET['mid']
-                llist = LineInformList.objects.filter(id = lid,username = lmid)
+                vid = request.GET['id']
+                llist = LineInformList.objects.filter(id = vid,username = mid)
                 if len(llist) == 0:
                     return HttpResponseBadRequest()
                 else:
@@ -468,7 +485,7 @@ def writeDB_bot(request):
             RemoveDialog(mid)
             return HttpResponseRedirect('/writeDB_bot2/')     
         else:
-            return HttpResponse('此連結已過期')
+            return HttpResponse('此連結已過期，請關閉瀏覽器繼續使用RateNotify')
         
         
         

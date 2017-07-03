@@ -35,9 +35,9 @@
     }
     
     function showurlmsg(){
-            document.getElementById("mid").value =  getParameterByName('mid',window.location);
+            /*document.getElementById("mid").value =  getParameterByName('mid',window.location);
             document.getElementById("id").value =  getParameterByName('id',window.location);
-            document.getElementById("move").value =  getParameterByName('move',window.location);
+            document.getElementById("move").value =  getParameterByName('move',window.location);*/
             
         }
 </script>
@@ -57,7 +57,7 @@
 			<label for="BS">請輸入買賣別B/S</label>
 				{{ f.BS }}
 			<br>
-		    <div id="myAlert1" class="alert alert-danger fade {% if showerr == 'V'  %}
+		    <div id="myAlert1" class="alert alert-danger fade {% if showerrBS == 'V'  %}
             in
             {% else %}
             hidden
@@ -71,7 +71,7 @@
 			<label for="ccy">請輸入幣別:</label>
 				{{ f.ccy }}
 			<br>
-			<div id="myAlert2" class="alert alert-danger fade {% if showerr == 'V'  %}
+			<div id="myAlert2" class="alert alert-danger fade {% if showerrccy == 'V'  %}
             in
             {% else %}
             hidden
@@ -87,7 +87,7 @@
 			<br>
 
             
-            <div id="myAlert" class="alert alert-danger fade {% if showerr == 'V'  %}
+            <div id="myAlert" class="alert alert-danger fade {% if showerrexrate == 'V'  %}
             in
             {% else %}
             hidden
@@ -100,13 +100,14 @@
 				
 		
 			
-			<input type='text' name="move" id="move" size = "1"  style="visibility:hidden" value ="">
-			<input type='text' name="id" id="id" size = "40"  style="visibility:hidden" value ="">
-			<input type='text' name="mid" id="mid" size = "40"  style="visibility:hidden" value ="">
+			<input type='text' name="move" id="move" size = "1"  style="visibility:hidden" value ="{{ move }}">
+			<input type='text' name="id" id="id" size = "40"  style="visibility:hidden" value ="{{ vid }} ">
+			<input type='text' name="mid" id="mid" size = "40"  style="visibility:hidden" value ="{{ mid }}">
 			
 			
 				
    		    <button name='gettoken' type="submit" class="button" onclick="showurlmsg();">寫入資料</button>
+            <!--<button name='gettoken' type="submit" class="button">寫入資料</button>-->
    		    
    		    
     </form>
