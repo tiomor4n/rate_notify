@@ -40,16 +40,17 @@ def index(request):
 def batchOP(vusername):
     
     def genmsgstr(name,ccy,exrate,rate,shortlink):
-        msgstr=u'親愛的{},{}已達指定匯率{},現為{},如本日欲停止通知請點選連結{}'.format(name,ccy,exrate,rate,shortlink)
+        msgstr=u'親愛的{},{}已達指定匯率{},現為{},如本日欲停止通知請點選連結{}'.format(name,findCCY(ccy),exrate,rate,shortlink)
         return msgstr
         
     def getShortUrl(vid):
         from itsdangerous import URLSafeSerializer
         secretkey = oper_para.objects.get(name='sk')
+        hookbackurl = oper_para.objects.get(name='hookbackurl')
         s = URLSafeSerializer(secretkey.content)
         vid2 = s.dumps(vid)
         shorturl=''
-        longurl = 'https://rate-notify-tiomor4n.c9users.io/stoptoday?id={}&TF={}'.format(vid2,'false')    
+        longurl = hookbackurl.content + '/stoptoday?id={}&TF={}'.format(vid2,'false')    
         print 'longurl:' + longurl
         shorturl = GetShortUrl(longurl)
         return shorturl
@@ -109,6 +110,7 @@ def RunBatchOP(request):
         batchOP('%')
         return HttpResponse('ok')
     except:
+        raise
         return HttpResponse("Unexpected error:", sys.exc_info()[0])
     
 def checkOP(vusername):
