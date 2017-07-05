@@ -102,8 +102,6 @@ def batchOP(vusername):
     print str(resultArr)
     return json.dumps(resultArr, encoding="UTF-8", ensure_ascii=False)
 
-
-
 def RunBatchOP(request):
     import sys
     try:
@@ -139,6 +137,21 @@ def checkOP(vusername):
         
     msgrt = sendmsg(U,msgstr)
     print msgrt
+
+def batnonstop():
+    alllist = LineInformList.objects.all()
+    for ll in alllist:
+        ll.stoptoday = 'X'
+        ll.save()
+
+def RunBatchnonstop(request):
+    import sys
+    try:
+        batnonstop()
+        return HttpResponse('ok')
+    except:
+        raise
+        return HttpResponse("Unexpected error:", sys.exc_info()[0])
 
 def subsummary(request):
     from itsdangerous import URLSafeSerializer

@@ -1,7 +1,7 @@
 from django.conf.urls import include, url
 from django.contrib import admin
 from subscribe.views import index
-from subscribe.views import RunBatchOP,line_login,GetLineNotify,GetTokenFromCode,subscribe_bot,writeDB_bot,writeDB_bot2,stoptoday
+from subscribe.views import RunBatchOP,line_login,GetLineNotify,GetTokenFromCode,subscribe_bot,writeDB_bot,writeDB_bot2,stoptoday,RunBatchnonstop
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -15,5 +15,7 @@ urlpatterns = [
     url(r'^writeDB_bot/', writeDB_bot),
     url(r'^writeDB_bot2/', writeDB_bot2),
     url(r'^stoptoday/', stoptoday),
+    url(r'^RunBatchnonstop/', RunBatchnonstop),
+    
 
 ]
