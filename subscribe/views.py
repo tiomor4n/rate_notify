@@ -104,9 +104,18 @@ def batchOP(vusername):
 
 def RunBatchOP(request):
     import sys
+    import os
+    from datetime import datetime
+    
     try:
+        if int(datetime.now().strftime('%H')) < 9 or int(datetime.now().strftime('%H')) > 16:
+            print 'overtime:' + datetime.now().strftime('%H')
+            sys.exit(0)
+
         batchOP('%')
         return HttpResponse('ok')
+    except SystemExit:
+        return HttpResponse('ok sys exit')
     except:
         raise
         return HttpResponse("Unexpected error:", sys.exc_info()[0])
@@ -406,11 +415,7 @@ def line_login(request):
 @csrf_exempt
 def subscribe_bot(request):
     import sys
-    import os
-    from datetime import datetime
-    if int(datetime.now().strftime('%H')) < 9 or int(datetime.now().strftime('%H')) > 16:
-        print 'overtime'
-        sys.exit(0)
+    
 
     if request.method == 'POST':
         print 'POST incoming'
