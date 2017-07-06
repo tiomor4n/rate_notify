@@ -138,16 +138,26 @@ def checkOP(vusername):
     msgrt = sendmsg(U,msgstr)
     print msgrt
 
-def batnonstop():
+def batnonstop(command):
     alllist = LineInformList.objects.all()
     for ll in alllist:
-        ll.stoptoday = 'X'
+        if command == 'on':
+            ll.stoptoday = 'V'
+        else:
+            ll.stoptoday = 'X'
         ll.save()
 
 def RunBatchnonstop(request):
     import sys
+    from datetime import datetime
     try:
-        batnonstop()
+        if int(datetime.now().strftime('%H')) > 12:
+            print 'off'
+            batnonstop('off')
+        else:
+            print 'on'
+            batnonstop('on')
+
         return HttpResponse('ok')
     except:
         raise
@@ -284,7 +294,8 @@ def stoptoday(request):
             else:
                 singleL.stoptoday = 'V'
             singleL.save()
-            return HttpResponse('您好，本通知本日已停用')
+            #return HttpResponse('您好，本通知本日已停用')
+            return render_to_response('stoptoday.html')
     except ValueError:
         pass
 
@@ -394,6 +405,13 @@ def line_login(request):
 
 @csrf_exempt
 def subscribe_bot(request):
+    import sys
+    import os
+    from datetime import datetime
+    if int(datetime.now().strftime('%H')) < 9 or int(datetime.now().strftime('%H')) > 16:
+        print 'overtime'
+        sys.exit(0)
+
     if request.method == 'POST':
         print 'POST incoming'
         mid = request.POST['mid']
