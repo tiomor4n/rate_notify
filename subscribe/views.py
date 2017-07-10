@@ -108,9 +108,14 @@ def RunBatchOP(request):
     from datetime import datetime
     
     try:
-        if int(datetime.now().strftime('%H')) < 9 or int(datetime.now().strftime('%H')) > 16:
+        if int(datetime.now().strftime('%H')) < 9:
             print 'overtime:' + datetime.now().strftime('%H')
             sys.exit(0)
+
+        if int(datetime.now().strftime('%H')) > 15:
+            print 'overtime:' + datetime.now().strftime('%H')
+            sys.exit(0)
+
 
         batchOP('%')
         return HttpResponse('ok')
@@ -151,9 +156,9 @@ def batnonstop(command):
     alllist = LineInformList.objects.all()
     for ll in alllist:
         if command == 'on':
-            ll.stoptoday = 'V'
-        else:
             ll.stoptoday = 'X'
+        else:
+            ll.stoptoday = 'V'
         ll.save()
 
 def RunBatchnonstop(request):
