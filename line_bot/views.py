@@ -13,6 +13,7 @@ import json
 from django.contrib.auth.models import User
 from subscribe.models import LineInformList,oper_para
 import re
+from subscribe.utility import GetShortUrl
 
 line_bot_api = LineBotApi('4VnJ7GkaAtZy8QayMgnZPtTxn+CcgnT7hjdBf8RkBPh/EpttHhf91LIFpukyC2Iiq1m8VacnjZwtwGmIjUV35LK8CPFXU9s7TC5dgK6+DRxinoPbO8SLjrw+1nIgY/q56FULCUZkQIcGVWey212BYQdB04t89/1O/w1cDnyilFU=')
 #parser = WebhookParser('c88afa86017208a7bc6af60be8585a33')
