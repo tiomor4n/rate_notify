@@ -36,6 +36,10 @@ def findCCY(vccy):
 	
 def index(request):
     return render_to_response('index.html',locals())
+
+def batchGetRate():
+    WriteToStatic()
+    return 'get new rate'
 	
 def batchOP(vusername):
     
@@ -56,7 +60,7 @@ def batchOP(vusername):
         return shorturl
     
 	
-    WriteToStatic()
+    #WriteToStatic()
         
     if vusername == '%':
         AllLine = LineInformList.objects.all()
@@ -102,6 +106,29 @@ def batchOP(vusername):
     print str(resultArr)
     return json.dumps(resultArr, encoding="UTF-8", ensure_ascii=False)
 
+def RunBatchGetRate(request):
+    import sys
+    import os
+    from datetime import datetime
+    
+    try:
+        if int(datetime.now().strftime('%H')) < 9:
+            print 'overtime:' + datetime.now().strftime('%H')
+            sys.exit(0)
+
+        if int(datetime.now().strftime('%H')) > 15:
+            print 'overtime:' + datetime.now().strftime('%H')
+            sys.exit(0)
+
+
+        batchGetRate()
+        return HttpResponse('ok get rate')
+    except SystemExit:
+        return HttpResponse('ok sys exit')
+    except:
+        raise
+        return HttpResponse("Unexpected error:", sys.exc_info()[0])
+
 def RunBatchOP(request):
     import sys
     import os
@@ -118,7 +145,7 @@ def RunBatchOP(request):
 
 
         batchOP('%')
-        return HttpResponse('ok')
+        return HttpResponse('ok batch notify')
     except SystemExit:
         return HttpResponse('ok sys exit')
     except:
@@ -164,15 +191,18 @@ def batnonstop(command):
 def RunBatchnonstop(request):
     import sys
     from datetime import datetime
+    ret = ''
     try:
         if int(datetime.now().strftime('%H')) > 12:
             print 'off'
             batnonstop('off')
+            ret = ' today nonstop off'
         else:
             print 'on'
             batnonstop('on')
+            ret = ' today nonstop on'
 
-        return HttpResponse('ok')
+        return HttpResponse('ok' + ret)
     except:
         raise
         return HttpResponse("Unexpected error:", sys.exc_info()[0])
