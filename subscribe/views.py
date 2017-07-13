@@ -436,7 +436,8 @@ def line_login(request):
         if rr == 'Line regeist success':
             return render_to_response('register_ok.html')
         else:
-            return HttpResponseRedirect('/subsummary/')
+            #return HttpResponseRedirect('/subsummary/')
+            return render_to_response('register_ok.html')
         
     else:
         login_client_id = oper_para.objects.get(name='login_client_id')
