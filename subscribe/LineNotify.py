@@ -26,7 +26,7 @@ def GetToken(code):
                           "Content-Type":"application/x-www-form-urlencoded"
                       }
                    )
-    print r.text
+    print r.text.encode('utf-8')
     return r.text
     
 def GetLoginToken(code):
@@ -39,7 +39,7 @@ def GetLoginToken(code):
                  }
             
         )
-        print r.text
+        print r.text.encode('utf-8')
         return r.text
     
     
@@ -63,7 +63,7 @@ def GetLoginToken(code):
                           "Content-Type":"application/x-www-form-urlencoded"
                       }
                    )
-    print r.text
+    print r.text.encode('utf-8')
     jsont = json.loads(r.text)
     r=GetLineProfile(jsont['access_token'])
     jsonr = json.loads(r)
@@ -71,7 +71,7 @@ def GetLoginToken(code):
     mName = jsonr['displayName']
     mpictureUrl = jsonr['pictureUrl']
     print 'mid:' + mid
-    print 'displayName:' + mName
+    print 'displayName:' + mName.encode('utf-8')
     print 'pictureUrl:' + mpictureUrl
     return mid, mName, mpictureUrl
     
@@ -111,7 +111,7 @@ def sendmsg(vuser= User,msg = ''):
     LU.msgcnt = cnt
     LU.token = vuser.lineuserinfo.token
     LU.save()
-    print r.text
+    print r.text.encode('utf-8')
     return r.text
     
 def sendgmail():
