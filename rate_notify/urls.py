@@ -5,8 +5,7 @@ from subscribe.views import RunBatchOP,line_login,GetLineNotify,GetTokenFromCode
 from subscribe.views import writeDB_bot2,stoptoday,RunBatchnonstop,RunBatchGetRate
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-	url(r'^$', index),
+    url(r'^simonamber2/admin/', admin.site.urls),
 	url(r'^line_bot/', include('line_bot.urls')),
 	url(r'^runbatchop/', RunBatchOP), 
 	url(r'^line_login/', line_login), 

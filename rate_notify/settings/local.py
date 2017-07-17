@@ -1,7 +1,7 @@
 from .base import *
 
 SECRET_KEY = 'hhnpfo*jc@a!%lgm7-q#4h9noj9v1kwm(d*=l2eji1#878vmd@'
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = True
 DATABASES = {
     'default': {
