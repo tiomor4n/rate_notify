@@ -14,6 +14,7 @@ from django.contrib.auth.models import User
 from subscribe.models import LineInformList,oper_para
 import re
 from subscribe.utility import GetShortUrl
+from utility import GetCNESnews
 
 line_bot_api = LineBotApi('4VnJ7GkaAtZy8QayMgnZPtTxn+CcgnT7hjdBf8RkBPh/EpttHhf91LIFpukyC2Iiq1m8VacnjZwtwGmIjUV35LK8CPFXU9s7TC5dgK6+DRxinoPbO8SLjrw+1nIgY/q56FULCUZkQIcGVWey212BYQdB04t89/1O/w1cDnyilFU=')
 #parser = WebhookParser('c88afa86017208a7bc6af60be8585a33')
@@ -81,56 +82,12 @@ def GenerateTemplate(kind = '',purporse=''):
         
     
 
-    carousel_template_test = TemplateSendMessage(
-    alt_text='Carousel template',
-    template=CarouselTemplate(
-        columns=[
-            CarouselColumn(
-                title=topicstr,
-                text=u'請選擇幣別',
-                actions=[
-                    PostbackTemplateAction(
-                        label='postback1',
-                        text='postback text1',
-                        data='action=buy&itemid=1'
-                    ),
-                    MessageTemplateAction(
-                        label='message1',
-                        text='message text1'
-                    ),
-                    URITemplateAction(
-                        label='uri1',
-                        uri='https://rate-notify-tiomor4n.c9users.io/subscribe_bot?move=insert&mid=U131be6da2c9ab40cf71ed6ab972fabcb'
-                    )
-                ]
-            ),
-            CarouselColumn(
-                title='this is menu2',
-                text='description2',
-                actions=[
-                    PostbackTemplateAction(
-                        label='postback2',
-                        text='postback text2',
-                        data='action=buy&itemid=2'
-                    ),
-                    MessageTemplateAction(
-                        label='message2',
-                        text='message text2'
-                    ),
-                    URITemplateAction(
-                        label='uri2',
-                        uri='http://example.com/2'
-                    )
-                ]
-            )
-        ]
-    )
-    )
+    
     
     #以上是範例
     
     button_template_subtitle = TemplateSendMessage(
-            alt_text='Buttons template',
+            alt_text=u'此功能僅限手機用戶使用',
             template=ButtonsTemplate(
                 title=topicstr,
                 text=u'請選擇功能別',
@@ -138,13 +95,18 @@ def GenerateTemplate(kind = '',purporse=''):
                     MessageTemplateAction(
                         label=u'訂閱資料管理',
                         text=u'訂閱資料管理'
-                    )
+                    ),
+                    MessageTemplateAction(
+                        label=u'最新匯率新聞',
+                        text=u'最新匯率新聞'
+                    ),
+
                 ]
             )
         )
 
     buttons_template_BS = TemplateSendMessage(
-            alt_text='Buttons template',
+            alt_text=u'此功能僅限手機用戶使用',
             template=ButtonsTemplate(
                 title=topicstr,
                 text='請選擇買賣別',
@@ -162,7 +124,7 @@ def GenerateTemplate(kind = '',purporse=''):
         )
         
     buttons_template_TWDorOTH = TemplateSendMessage(
-            alt_text='Buttons template',
+            alt_text=u'此功能僅限手機用戶使用',
             template=ButtonsTemplate(
                 title=topicstr,
                 text='請問你要',
@@ -180,7 +142,7 @@ def GenerateTemplate(kind = '',purporse=''):
         )
         
     carousel_template_ccy = TemplateSendMessage(
-    alt_text='Carousel template',
+    alt_text=u'此功能僅限手機用戶使用',
     template=CarouselTemplate(
         columns=[
             CarouselColumn(
@@ -453,14 +415,14 @@ def GenSubscribeTemplate(mid='',purporse = ''):
         
         
         carousel_template_subscribe = TemplateSendMessage(
-        alt_text='Carousel template',
+        alt_text=u'此功能僅限手機用戶使用',
         template=CarouselTemplate(
             columns=CCarr
             )
         )
     
     buttons_template_subscribedata = TemplateSendMessage(
-            alt_text='Buttons template',
+            alt_text=u'此功能僅限手機用戶使用',
             template=ButtonsTemplate(
                 title=u'管理訂閱資料',
                 text=u'請問你要',
@@ -590,7 +552,7 @@ def callback(request):
                         elif purporse == '/ratecal2' or purporse == u'外幣換台幣':
                             line_bot_api.reply_message(
                                 event.reply_token,
-                                TextSendMessage(text=u'請輸入' + event.message.text + u'金額'),
+                                TextSendMessage(text=u'請點選下方鍵盤圖示，輸入' + event.message.text + u'金額'),
                             )
                             LineMsgOut(mid = mid,message = u'input amount')
                                 
@@ -631,7 +593,7 @@ def callback(request):
                             print 'ratecal start'
                             line_bot_api.reply_message(
                                 event.reply_token,
-                                TextSendMessage(text=u'請輸入新台幣金額'),
+                                TextSendMessage(text=u'請點選下方鍵盤圖示，輸入新台幣金額'),
                             )
                             LineMsgOut(mid = mid,message = u'input amount')
                             
@@ -655,7 +617,7 @@ def callback(request):
                         WriteToStaticBOT(body,"ask")
                         line_bot_api.reply_message(
                             event.reply_token,
-                            TextSendMessage(text=u'您好，我可以幫你注意最新的匯率報價，並主動通知您。 如果您對我們的服務有想說的話，歡迎到以下連結告訴我們 https://goo.gl/JQS1Bg'),
+                            TextSendMessage(text=u'您好，我可以幫你注意最新的匯率報價，並主動通知您。 如果您對我們的服務有想說的話，歡迎到以下連結告訴我們 \n https://goo.gl/JQS1Bg\n你也可以關注我們的粉絲專頁，看看有沒有最新訊息喔 \n https://www.facebook.com/RateNotifyTW/'),
                         )
                         LineMsgOut(mid = mid,message = u'關於我')
                     
@@ -705,7 +667,15 @@ def callback(request):
                                 TextSendMessage(text=u'已刪除完成')
                             )
                             
-                        
+                    elif event.message.text == u'最新匯率新聞':
+                        if CheckDialog(mid):
+                            RemoveDialog(mid)
+                        WriteToStaticBOT(body,"ask")
+                        line_bot_api.reply_message(
+                                event.reply_token,
+                                TextSendMessage(text=GetCNESnews()),
+                            )
+                        LineMsgOut(mid = mid,message = 'show latest news')
                     
                     elif isfloat(event.message.text):
                         WriteToStaticBOT(body,"ask")
